@@ -1,6 +1,14 @@
+from typing import NamedTuple
 import icontract
 import itertools
 import numpy as np
+
+class JacobiResult(NamedTuple):
+	"""Result object for eig_jacobi function."""
+	eigenvalues: np.ndarray    # 1D-array (n,) of eigenvalues
+	eigenvectors: np.ndarray   # 2D-array (n, n) of eigenvectors
+	iterations: int            # Iteration steps count
+	error: float               # The error calculated as sum of squared non-diagonal elements
 
 def _modified_signum(x: float) -> float:
 	return 1 if x >= 0 else -1
@@ -30,19 +38,18 @@ def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = int(1e3))
 
 	Returns
 	-------
-	np.ndarray[float]
-		The eigenvalues listed in 1D np.ndarray.
-	np.ndarray[float]
-		The eigenvectors gathered in 2D np.ndarray.
-	int
-		The amount of iteration steps to end calculation.
-	float
-		The error calculated as sum of squared non-diagonal elements of matrix.
+	JacobiResult
+		A named tuple containing:
+		- eigenvalues : (n,) ndarray of eigenvalues.
+		- eigenvectors : (n, n) ndarray where each column is an eigenvector.
+		- iterations : int, the number of iteration steps executed.
+		- error : float, the final error calculated as sum of squared non-diagonal elements.
 
 	Raises
 	------
 	icontract.ViolationError
-		If one of the conditions defined above function declaration are not met.
+		If any of the preconditions (matrix symmetry, dimensions, types) 
+		or postconditions (invariants, output shapes) are violated.
 	"""
 
 	Ai = A.astype(float).copy() 
@@ -102,4 +109,4 @@ def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = int(1e3))
 		steps += 1
 		Si -= 2 * (removing) ** 2
 	
-	return np.diag(Ai), Vi, steps, Si
+	return JacobiResult(np.diag(Ai), Vi, steps, Si)
