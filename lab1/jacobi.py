@@ -42,10 +42,7 @@ def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = int(1e3))
 	Raises
 	------
 	icontract.ViolationError
-		If one of the conditions are not met:
-		1) The symmetricity of input matrix.
-		2) The positivness of a tollerance value.
-		3) The positivness of a maximum iterations value.
+		If one of the conditions defined above function declaration are not met.
 	"""
 
 	Ai = A.astype(float).copy() 
