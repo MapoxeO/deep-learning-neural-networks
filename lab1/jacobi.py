@@ -24,13 +24,13 @@ def _modified_signum(x: float) -> float:
 @icontract.ensure(lambda A, result: len(result[0]) == A.shape[0], 'Number of eigenvalues has to be equal to size of input matrix.')
 @icontract.ensure(lambda A, result: result[1].shape == A.shape, 'Eigenvector matrix shape missmatch.')
 @icontract.ensure(lambda max_iterations, result: result[2] <= max_iterations, 'Executed iterations exceeded max_iterations.')
-def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = int(1e3)) -> tuple[np.ndarray, np.ndarray, int, float]:
+def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = int(1e3)) -> JacobiResult:
 	"""Calculates eigenvalues and eigenvectors of square symmetrical real valued 2D matrix with Jacobi method.
 
 	Parameters
 	----------
 	A : np.ndarray
-		The symmetrical real valued matrix
+		The symmetrical real valued matrix.
 	tol : float
 		The positive tolerance for error.
 	max_iterations : int
