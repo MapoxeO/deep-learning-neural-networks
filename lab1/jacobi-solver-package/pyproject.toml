@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jacobi_solver"
+version = "1.0.0"
+description = "A package for calculating eigenvalues and eigenvectors with Jacobi method."
+readme = "README.md"
+authors = [
+	{ name = "MapoxeO" }
+]
+requires-python = ">=3.10"
+dependencies = [
+	"numpy>=1.20.0",
+	"icontract>=2.6.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
