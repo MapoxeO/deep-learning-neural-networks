@@ -13,13 +13,18 @@ class JacobiResult(NamedTuple):
 def _modified_signum(x: float) -> float:
 	return 1 if x >= 0 else -1
 
-@icontract.require(lambda A: A.ndim == 2, 'Matrix has to be 2D.')
-@icontract.require(lambda A: A.shape[0] == A.shape[1], 'Matrix hast to be square.')
-@icontract.require(lambda A: np.all(np.isclose(A, A.T)), 'Matrix has to be symmetric.')
-@icontract.require(lambda A: np.issubdtype(A.dtype, np.number) and not np.issubdtype(A.dtype, np.complexfloating), 'Matrix has to be real.')
-@icontract.require(lambda tol: tol > 0, 'Tolerance has to be positive real.')
-@icontract.require(lambda max_iterations: isinstance(max_iterations, int), 'Maximum iterations has to be an integer.')
-@icontract.require(lambda max_iterations: max_iterations > 0, 'Maximum iterations has to be positive integer.')
+def _is_valid_matrix(A) -> bool:
+	return (isinstance(A, np.ndarray)) == ( A.ndim == 2 ) and ( len(set(A.shape)) == 1 ) and ( np.all(np.isclose(A, A.T)) ) and ( np.issubdtype(A.dtype, np.number) and not np.issubdtype(A.dtype, np.complexfloating) )
+
+def _is_valid_tol(tol) -> bool:
+	return isinstance(tol, float) and tol > 0
+
+def _is_valid_maxit(max_iterations) -> bool:
+	return isinstance(max_iterations, int) and max_iterations > 0
+
+@icontract.require(_is_valid_matrix, 'Matrix A has to be 2D real symmetric.')
+@icontract.require(_is_valid_tol, 'Tolerance has to be positive real.')
+@icontract.require(_is_valid_maxit, 'Maximum iterations has to be a positive integer.')
 
 @icontract.ensure(lambda A, result: len(result[0]) == A.shape[0], 'Number of eigenvalues has to be equal to size of input matrix.')
 @icontract.ensure(lambda A, result: result[1].shape == A.shape, 'Eigenvector matrix shape missmatch.')
