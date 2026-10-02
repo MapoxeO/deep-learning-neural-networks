@@ -26,10 +26,10 @@ def _is_valid_maxit(max_iterations) -> bool:
 @icontract.require(_is_valid_tol, 'Tolerance has to be positive real.')
 @icontract.require(_is_valid_maxit, 'Maximum iterations has to be a positive integer.')
 
-@icontract.ensure(lambda A, result: len(result[0]) == A.shape[0], 'Number of eigenvalues has to be equal to size of input matrix.')
-@icontract.ensure(lambda A, result: result[1].shape == A.shape, 'Eigenvector matrix shape missmatch.')
-@icontract.ensure(lambda max_iterations, result: result[2] <= max_iterations, 'Executed iterations exceeded max_iterations.')
-def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = int(1e3)) -> JacobiResult:
+@icontract.ensure(lambda A, result: len(result.eigenvalues) == A.shape[0], 'Number of eigenvalues has to be equal to size of input matrix.')
+@icontract.ensure(lambda A, result: result.eigenvectors.shape == A.shape, 'Eigenvector matrix shape missmatch.')
+@icontract.ensure(lambda max_iterations, result: result.iterations <= max_iterations, 'Executed iterations exceeded max_iterations.')
+def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = 1000) -> JacobiResult:
 	"""Calculates eigenvalues and eigenvectors of square symmetrical real valued 2D matrix with Jacobi method.
 
 	Parameters
@@ -114,4 +114,5 @@ def eig_jacobi(A: np.ndarray, tol: float = 1e-3, max_iterations: int = int(1e3))
 		steps += 1
 		Si -= 2 * (removing) ** 2
 	
-	return JacobiResult(np.diag(Ai), Vi, steps, Si)
+	result = JacobiResult(np.diag(Ai), Vi, steps, Si)
+	return result
