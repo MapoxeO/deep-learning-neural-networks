@@ -33,6 +33,8 @@ class Distribution(NamedTuple):
 	title: str
 	gen: Callable[[tuple[int, int]], np.ndarray]
 
+
+
 def generate_ensemble(n: int, k: int, dist: Distribution) -> np.ndarray:
 	matrices = dist.gen((n * k, k)).reshape(n, k, k).astype(np.float64)
 
@@ -76,7 +78,6 @@ def make_graph(data: np.ndarray, n: int, k: int, dist: Distribution):
 def main():
 	distributions = [
 		Distribution('normal', 'Элементы матриц распределены нормально:\n' + r'$a_{ij} \sim \mathcal{N}(\mu = 0, \sigma = 1)$', gen=lambda x: _normal_dist(x, 0, 1)),
-		# Исправлено: для Бернулли нам теперь нужно генерировать плоский массив правильного размера
 		Distribution('bernoulli', 'Элементы матриц распределены по Бернулли:\n' + r'$\rho_{a_{ij}}(x) = ^1\!/\!_2 (\delta(x-1) + \delta(x+1))$', gen=lambda x: _bernoulli_dist((x[0], x[1]), [-1, 1])),
 	]
 	N = 10000
