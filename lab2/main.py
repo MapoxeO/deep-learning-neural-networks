@@ -33,25 +33,24 @@ class Distribution(NamedTuple):
 	title: str
 	gen: Callable[[tuple[int, int]], np.ndarray]
 
-def generate_ensemble(n: int, k: int, dist: Distribution) -> list[np.ndarray]:
-	result = [0] * n
-	for i in range(n):
-		matrix: np.ndarray = dist.gen((k, k)).astype(np.float64)
-		result[i] = (matrix + matrix.T) / 2
+def generate_ensemble(n: int, k: int, dist: Distribution) -> np.ndarray:
+	matrices = dist.gen((n * k, k)).reshape(n, k, k).astype(np.float64)
+
+	idx = np.triu_indices(k)
 	
-	return result
+	symmetric_matrices = np.zeros_like(matrices)
+	
+	symmetric_matrices[:, idx[0], idx[1]] = matrices[:, idx[0], idx[1]]
+	symmetric_matrices[:, idx[1], idx[0]] = matrices[:, idx[0], idx[1]]
+	
+	return symmetric_matrices
 
-def get_normalized_eigenvalues_differnces(ensemble: list[np.ndarray]) -> np.ndarray:
-	result = [0] * len(ensemble)
-	for i in range(len(ensemble)):
-		eigv = np.sort(np.linalg.eigh(ensemble[i]).eigenvalues)
-		eigv_diffs = eigv[1] - eigv[0]
-		result[i] = eigv_diffs
-
-	result = np.array(result).flatten()
-	result /= np.mean(result)
-
-	return result
+def get_normalized_eigenvalues_differnces(ensemble: np.ndarray) -> np.ndarray:
+	eigvals = np.linalg.eigvalsh(ensemble)
+	
+	eigv_diffs = eigvals[:, 1] - eigvals[:, 0]
+	
+	return eigv_diffs / np.mean(eigv_diffs)
 
 def make_graph(data: np.ndarray, n: int, k: int, dist: Distribution):
 	X = np.linspace(0, 6, 250)
@@ -74,12 +73,11 @@ def make_graph(data: np.ndarray, n: int, k: int, dist: Distribution):
 	else:
 		plt.savefig(IMGS_PATH / f'{dist.type}-{n}-{k}.pdf')
 
-
-
 def main():
 	distributions = [
 		Distribution('normal', 'Элементы матриц распределены нормально:\n' + r'$a_{ij} \sim \mathcal{N}(\mu = 0, \sigma = 1)$', gen=lambda x: _normal_dist(x, 0, 1)),
-		Distribution('bernoulli', 'Элементы матриц распределены по Бернулли:\n' + r'$\rho_{a_{ij}}(x) = ^1\!/\!_2 (\delta(x-1) + \delta(x+1))$', gen=lambda x: _bernoulli_dist(x, [-1, 1])),
+		# Исправлено: для Бернулли нам теперь нужно генерировать плоский массив правильного размера
+		Distribution('bernoulli', 'Элементы матриц распределены по Бернулли:\n' + r'$\rho_{a_{ij}}(x) = ^1\!/\!_2 (\delta(x-1) + \delta(x+1))$', gen=lambda x: _bernoulli_dist((x[0], x[1]), [-1, 1])),
 	]
 	N = 10000
 	studies = [
@@ -97,15 +95,15 @@ def main():
 	]
 
 	with alive_bar(len(studies), theme='classic') as bar:
-		for study in studies:
-			n, k, dist = study
-			bar.text = 'Generating the ensemble...'
-			ensemble = generate_ensemble(n, k, dist)
-			bar.text = 'Calculating eigenvalues of the ensemble...'
-			normalized_diffs = get_normalized_eigenvalues_differnces(ensemble)
-			bar.text = 'Plotting distribution...'
-			make_graph(normalized_diffs, n, k, dist)
-			bar()
+			for study in studies:
+				n, k, dist = study
+				bar.text = 'Generating the ensemble...'
+				ensemble = generate_ensemble(n, k, dist)
+				bar.text = 'Calculating eigenvalues of the ensemble...'
+				normalized_diffs = get_normalized_eigenvalues_differnces(ensemble)
+				bar.text = 'Plotting distribution...'
+				make_graph(normalized_diffs, n, k, dist)
+				bar()
 
 if __name__ == '__main__':
 	main()
