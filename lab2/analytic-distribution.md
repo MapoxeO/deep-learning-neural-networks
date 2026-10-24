@@ -14,7 +14,7 @@ $$
 $$
 \rho(x)=\frac{1}{2}(\delta(x-1)+\delta(x+1))
 $$
-То есть, $a, b, c \in \{-1, 1\}$ равновероятно.
+То есть, $a, b, c \in \\{-1, 1\\}$ равновероятно.
 
 Найти распределение разности собственных чисел такой матрицы.
 
@@ -41,9 +41,9 @@ $$
    $$
 Итого носителем случайной величины $\Delta$ будет следующее множество значений:
 $$
-\mathrm{supp}\,\Delta = \left\{2, 2\sqrt2\right\}
+\mathrm{supp}\,\Delta = \left\\{2, 2\sqrt2\right\\}
 $$
-Число всевозможных вариантов размещений $N$ из множества двух $(m = 2)$ элементов $\{-1, 1\}$во все элементы матрицы $\left(k = \frac{2(2+1)}2 = 3\right)$, не забыв про симметрию, равняется:
+Число всевозможных вариантов размещений $N$ из множества двух $(m = 2)$ элементов $\\{-1, 1\\}$во все элементы матрицы $\left(k = \frac{2(2+1)}2 = 3\right)$, не забыв про симметрию, равняется:
 $$
 N = m^k = 2^3 = 8
 $$
@@ -73,8 +73,8 @@ $$\begin{align}
 	&\mu=\mathbb E \left[\Delta\right]=\frac{2 + 2\sqrt2}{2} = 1+\sqrt2 \\
 	&\xi=\frac{\Delta}{\mu}:\\
 	&\qquad \frac{2}{1+\sqrt{2}} \approx 0.82843, \qquad \frac{2\sqrt2}{1+\sqrt{2}} \approx 1.17157 \\\\
-	&\qquad \mathrm{supp}\,\xi=\left\{\frac{2}{1+\sqrt{2}},\frac{2\sqrt{2}}{1+\sqrt{2}}\right\} \\
-	&\qquad \rho_\xi(x) = \frac{1}{2}\left\{\delta\left(x - \frac{2}{1 + \sqrt{2}}\right) + \delta\left(x - \frac{2\sqrt2}{1 + \sqrt{2}}\right)\right\} \\
+	&\qquad \mathrm{supp}\,\xi=\left\\{\frac{2}{1+\sqrt{2}},\frac{2\sqrt{2}}{1+\sqrt{2}}\right\\} \\
+	&\qquad \rho_\xi(x) = \frac{1}{2}\left\\{\delta\left(x - \frac{2}{1 + \sqrt{2}}\right) + \delta\left(x - \frac{2\sqrt2}{1 + \sqrt{2}}\right)\right\\} \\
 \end{align}
 $$
 График последнего распределения мы можем наблюдать в ходе проведения лабораторной работы, в файле `/imgs/bernoulli-10000-2.pdf`, что согласуется с теорией.
