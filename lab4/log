@@ -1,0 +1,76 @@
+Currently working on device: cuda
+Learning rate: 0.0005
+Max epochs: 20000
+
+on 0: Training stopped: reached max epochs: 20000
+	- epoch: 20000
+	- loss: 0.02518950030207634
+	- prev_loss: 0.025190044194459915
+	- abs_loss_difference: 5.438923835754395e-07
+on 1: Training stopped: reached max epochs: 20000
+	- epoch: 20000
+	- loss: 0.018602190539240837
+	- prev_loss: 0.0186025220900774
+	- abs_loss_difference: 3.3155083656311035e-07
+on 2: Training stopped: reached max epochs: 20000
+	- epoch: 20000
+	- loss: 0.018737567588686943
+	- prev_loss: 0.018737979233264923
+	- abs_loss_difference: 4.116445779800415e-07
+on 3: Training stopped: reached max epochs: 20000
+	- epoch: 20000
+	- loss: 0.017710931599140167
+	- prev_loss: 0.01771131530404091
+	- abs_loss_difference: 3.8370490074157715e-07
+on 4: Training stopped: reached max epochs: 20000
+	- epoch: 20000
+	- loss: 0.016394734382629395
+	- prev_loss: 0.01639515906572342
+	- abs_loss_difference: 4.246830940246582e-07
+on 5: Training stopped: reached max epochs: 20000
+	- epoch: 20000
+	- loss: 0.014264483004808426
+	- prev_loss: 0.014264825731515884
+	- abs_loss_difference: 3.427267074584961e-07
+Training... Hidden layer neurons: 64 |████████████████████████████████████████| 6/6 [100%] in 2:37.2 (0.03/s) 
+
+========================= Model 1 =========================
+1. Layer: 0.weight, Shape: torch.Size([2, 24])
+2. Layer: 0.bias, Shape: torch.Size([2])
+3. Layer: 2.weight, Shape: torch.Size([1, 2])
+4. Layer: 2.bias, Shape: torch.Size([1])
+
+
+========================= Model 2 =========================
+1. Layer: 0.weight, Shape: torch.Size([4, 24])
+2. Layer: 0.bias, Shape: torch.Size([4])
+3. Layer: 2.weight, Shape: torch.Size([1, 4])
+4. Layer: 2.bias, Shape: torch.Size([1])
+
+
+========================= Model 3 =========================
+1. Layer: 0.weight, Shape: torch.Size([8, 24])
+2. Layer: 0.bias, Shape: torch.Size([8])
+3. Layer: 2.weight, Shape: torch.Size([1, 8])
+4. Layer: 2.bias, Shape: torch.Size([1])
+
+
+========================= Model 4 =========================
+1. Layer: 0.weight, Shape: torch.Size([16, 24])
+2. Layer: 0.bias, Shape: torch.Size([16])
+3. Layer: 2.weight, Shape: torch.Size([1, 16])
+4. Layer: 2.bias, Shape: torch.Size([1])
+
+
+========================= Model 5 =========================
+1. Layer: 0.weight, Shape: torch.Size([32, 24])
+2. Layer: 0.bias, Shape: torch.Size([32])
+3. Layer: 2.weight, Shape: torch.Size([1, 32])
+4. Layer: 2.bias, Shape: torch.Size([1])
+
+
+========================= Model 6 =========================
+1. Layer: 0.weight, Shape: torch.Size([64, 24])
+2. Layer: 0.bias, Shape: torch.Size([64])
+3. Layer: 2.weight, Shape: torch.Size([1, 64])
+4. Layer: 2.bias, Shape: torch.Size([1])
