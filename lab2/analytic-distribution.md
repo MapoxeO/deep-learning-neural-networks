@@ -7,7 +7,7 @@
 
 Пусть наша матрица $A$ симметрична имеет вид:
 $$
-A = \begin{bmatrix}a & b \\ b & c \end{bmatrix}
+A = \begin{bmatrix} a & b \\\\ b & c \end{bmatrix}
 $$
 
 Где ее элементы $a, b, c$ **независимы** и распределены по закону:
